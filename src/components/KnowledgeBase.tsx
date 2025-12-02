@@ -15,7 +15,7 @@ type FormData = {
   flows: Flow[];
 };
 
-export default function BaseDeConocimiento() {
+export default function KnowledgeBase() {
   const { register, handleSubmit, setValue, watch, reset } = useForm<FormData>({
     defaultValues: { prompt: "", files: [], flows: [] },
   });

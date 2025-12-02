@@ -11,7 +11,7 @@ interface Props {
   onAddVariable: (variable: VariableInputs) => void;
 }
 
-export default function AgregarVariable({ onAddVariable }: Props) {
+export default function AddVariable({ onAddVariable }: Props) {
   const {
     register,
     handleSubmit,

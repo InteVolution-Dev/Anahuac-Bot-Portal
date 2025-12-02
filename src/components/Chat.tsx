@@ -1,12 +1,11 @@
-import { ArrowLeft, MessageCircle } from "lucide-react";
-import { useParams, useNavigate } from "react-router-dom";
+import { MessageCircle } from "lucide-react";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 type Message = { sender: "user" | "bot"; text: string };
 
-export default function Playground() {
+export default function Chat() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -29,7 +28,7 @@ export default function Playground() {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4">
+    <div className="pt-24 pb-12 px-4">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="mb-8 text-center">
@@ -38,7 +37,7 @@ export default function Playground() {
           </div>
 
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Playground — Chat ID {id}
+            Playground — <span className="text-orange-500">Chat ID</span> 
           </h1>
 
           <p className="text-gray-500 dark:text-gray-400">
@@ -101,18 +100,6 @@ export default function Playground() {
           </div>
         </div>
 
-        {/* Botón Volver */}
-        <div className="flex justify-start mt-8">
-          <button
-            onClick={() => navigate("/dashboard")}
-            className="flex items-center gap-2 px-6 py-3 text-gray-600 
-              dark:text-gray-400 hover:text-gray-900 dark:hover:text-white 
-              font-medium transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Volver
-          </button>
-        </div>
       </div>
     </div>
   );

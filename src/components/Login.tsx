@@ -25,7 +25,7 @@ const Login = () => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!data.email) return;
     localStorage.setItem("isLoggedIn", "true");
-    navigate("/dashboard");
+    navigate("/home");
   };
 
   return (
