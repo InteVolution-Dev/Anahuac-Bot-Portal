@@ -8,30 +8,30 @@ Anahuac Bot Portal es una aplicación web que permite crear, configurar y gestio
 
 ## Características Principales
 
-- 🔐 **Sistema de autenticación** con rutas protegidas
-- 🤖 **Gestión de Bots** - Crear, editar y listar múltiples bots
-- 🔄 **Editor de Flujos** - Diseño visual de conversaciones
-- 📚 **Base de Conocimiento** - Gestión de información del bot
-- 🎨 **Variables Dinámicas** - Configuración de parámetros personalizados
-- 📱 **Interfaz Responsive** - Diseño adaptable a todos los dispositivos
-- 🌙 **Tema Moderno** - UI limpia y profesional con Tailwind CSS
-- ⚡ **Rendimiento Optimizado** - Construido con Vite para carga rápida
+-   🔐 **Sistema de autenticación** con rutas protegidas
+-   🤖 **Gestión de Bots** - Crear, editar y listar múltiples bots
+-   🔄 **Editor de Flujos** - Diseño visual de conversaciones
+-   📚 **Base de Conocimiento** - Gestión de información del bot
+-   🎨 **Variables Dinámicas** - Configuración de parámetros personalizados
+-   📱 **Interfaz Responsive** - Diseño adaptable a todos los dispositivos
+-   🌙 **Tema Moderno** - UI limpia y profesional con Tailwind CSS
+-   ⚡ **Rendimiento Optimizado** - Construido con Vite para carga rápida
 
 ## Tecnologías
 
-- **React 19** - Biblioteca de interfaz de usuario
-- **TypeScript** - Tipado estático para JavaScript
-- **React Router DOM** - Navegación y rutas
-- **Tailwind CSS 4** - Framework de estilos utility-first
-- **Lucide React** - Iconos modernos
-- **Framer Motion** - Animaciones fluidas
-- **React Hook Form** - Gestión de formularios
-- **Vite 7** - Build tool y servidor de desarrollo
+-   **React 19** - Biblioteca de interfaz de usuario
+-   **TypeScript** - Tipado estático para JavaScript
+-   **React Router DOM** - Navegación y rutas
+-   **Tailwind CSS 4** - Framework de estilos utility-first
+-   **Lucide React** - Iconos modernos
+-   **Framer Motion** - Animaciones fluidas
+-   **React Hook Form** - Gestión de formularios
+-   **Vite 7** - Build tool y servidor de desarrollo
 
 ## Requisitos Previos
 
-- Node.js (versión 18 o superior)
-- npm o yarn
+-   Node.js (versión 18 o superior)
+-   npm o yarn
 
 ## Instalación
 
@@ -102,9 +102,10 @@ Anahuac-Bot-Portal/
 ## Desarrollo
 
 El proyecto utiliza:
-- ESLint para mantener la calidad del código
-- TypeScript para type safety
-- Vite para hot module replacement durante el desarrollo
+
+-   ESLint para mantener la calidad del código
+-   TypeScript para type safety
+-   Vite para hot module replacement durante el desarrollo
 
 ## Licencia
 
