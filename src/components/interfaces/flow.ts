@@ -24,6 +24,7 @@ export interface FlowsResponse {
 export interface BackendFlow {
   id: string;
   name: string;
+  urlBase: string;
   description: string;
   active: boolean;
   updatedAt: string;

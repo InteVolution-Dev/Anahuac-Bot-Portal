@@ -8,6 +8,8 @@ import CreateFlowPage from "./app/pages/CreateFlowPage";
 import PlaygroundPage from "./app/pages/PlaygroundPage";
 import EditFlowPage from "./app/pages/EditFlowPage";
 import KnowledgeBasePage from "./app/pages/KnowledgeBasePage";
+import { useSpinnerStore } from "./store/useSpinner";
+import Spinner from "./components/ui/Spinner";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -30,8 +32,11 @@ function App() {
     setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
   }, [location]);
 
+  const spinner = useSpinnerStore((s) => s.spinner);
+
   return (
     <>
+    {spinner&&(<Spinner/>)}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/login" />} />

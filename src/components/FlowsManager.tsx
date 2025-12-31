@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { transformGetFlowsResponseToFullFlow } from "../utils/helpers";
 import { createFlowData, deleteFlowData, getFlows, patchFlowData, updateFlowData } from "../api/flows";
+import { useSpinnerStore } from "../store/useSpinner";
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -130,11 +131,12 @@ export interface OpenAPISchema {
 // ============================================================================
 
 function useFlowsStorage() {
+  const openSpinner = useSpinnerStore((s) => s.openSpinner);
+  const closeSpinner = useSpinnerStore((s) => s.closeSpinner);
   const [flows, setFlows] = useState<Flow[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const loadFlows = useCallback(async () => {
-    setIsLoading(true);
+    openSpinner()
     try {
       const response = await getFlows();
       const transformed = transformGetFlowsResponseToFullFlow(response);
@@ -142,7 +144,7 @@ function useFlowsStorage() {
     } catch (error) {
       console.error("Error loading flows:", error);
     } finally {
-      setIsLoading(false);
+      closeSpinner()
     }
   }, []);
 
@@ -182,7 +184,7 @@ function useFlowsStorage() {
       });
 
       try {
-        setIsLoading(true);
+        openSpinner()
 
         const openApiSchema = generateOpenAPISchema(finalFlow);
         if (isEdit) {
@@ -214,7 +216,7 @@ function useFlowsStorage() {
 
         throw error;
       } finally {
-        setIsLoading(false);
+        closeSpinner()
       }
     },
     [loadFlows]
@@ -255,13 +257,13 @@ function useFlowsStorage() {
   const deleteFlow = useCallback(
     async (flow: Flow) => {
       try {
-        setIsLoading(true)
+        openSpinner()
         await deleteFlowData(flow.name, flow.id);
         loadFlows()
-        setIsLoading(false)
+        closeSpinner()
       } catch (error) {
         console.error("Error deleting flow:", error);
-        setIsLoading(false)
+        closeSpinner()
       }
     },
     [loadFlows]
@@ -274,7 +276,7 @@ function useFlowsStorage() {
     return flows.find((f) => f.id === id);
   }, [flows]);
 
-  return { flows, isLoading, saveFlow, deleteFlow, getFlow, changeActive };
+  return { flows, saveFlow, deleteFlow, getFlow, changeActive };
 }
 
 // ============================================================================
@@ -2924,7 +2926,7 @@ function Step4Preview({
 // ============================================================================
 
 export default function FlowsManager() {
-  const { flows, isLoading, saveFlow, deleteFlow, getFlow, changeActive } = useFlowsStorage();
+  const { flows, saveFlow, deleteFlow, getFlow, changeActive } = useFlowsStorage();
 
   // View state
   const [view, setView] = useState<"dashboard" | "editor">("dashboard");
@@ -3142,11 +3144,6 @@ if (step === 0) {
 
   return (
     <div className="min-h-screen relative">
-      {isLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-t-2 border-orange-500"></div>
-        </div>
-      )}
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 
       {/* Delete Confirmation Modal */}

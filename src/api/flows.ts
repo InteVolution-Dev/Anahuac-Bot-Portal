@@ -1,7 +1,15 @@
 import type { OpenAPISchema } from "../components/FlowsManager";
-import type { FlowsResponse, PatchFlowRequest, UpdateFlowRequest } from "../components/interfaces/flow";
-import { URL_API_AGENT } from "../utils/environments";
+import type {
+  FlowsResponse,
+  PatchFlowRequest,
+  UpdateFlowRequest,
+} from "../components/interfaces/flow";
 
+import { httpClient } from "../utils/httpClient";
+
+/* =========================
+ * Base types
+ * ========================= */
 export interface ApiCodeResponse {
   code: {
     http: number;
@@ -9,64 +17,56 @@ export interface ApiCodeResponse {
   };
 }
 
-
+/* =========================
+ * GET flows
+ * ========================= */
 export const getFlows = async (): Promise<FlowsResponse> => {
-  const response = await fetch(`${URL_API_AGENT}/flows-list`);
-  
-  if (!response.ok) {
-    throw new Error(`Error ${response.status}: ${response.statusText}`);
-  }
-
-  const data: FlowsResponse = await response.json();
-  return data;
+  return httpClient<FlowsResponse>("/flows-list", {
+    method: "GET",
+  });
 };
 
-
+/* =========================
+ * DELETE flow
+ * ========================= */
 export const deleteFlowData = async (
   flowName: string,
   storedFlowRowKey: string
 ): Promise<ApiCodeResponse["code"]> => {
-  const response = await fetch(`${URL_API_AGENT}/delete-flow`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      flowName,
-      storedFlowRowKey
-    })
-  });
+  const response = await httpClient<ApiCodeResponse>(
+    "/delete-flow",
+    {
+      method: "DELETE",
+      body: JSON.stringify({
+        flowName,
+        storedFlowRowKey,
+      }),
+    }
+  );
 
-  if (!response.ok) {
-    throw new Error(`Error ${response.status}: ${response.statusText}`);
-  }
-
-  const data: ApiCodeResponse = await response.json();
-
-  return data.code;
+  return response.code;
 };
 
-
+/* =========================
+ * CREATE flow
+ * ========================= */
 export const createFlowData = async (
   schema: OpenAPISchema
 ): Promise<ApiCodeResponse["code"]> => {
-  const response = await fetch(`${URL_API_AGENT}/create-flow`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(schema)
-  });
+  const response = await httpClient<ApiCodeResponse>(
+    "/create-flow",
+    {
+      method: "POST",
+      body: JSON.stringify(schema),
+    }
+  );
 
-  if (!response.ok) {
-    throw new Error(`Error ${response.status}: ${response.statusText}`);
-  }
-
-  const data: ApiCodeResponse = await response.json();
-
-  return data.code;
+  return response.code;
 };
 
+/* =========================
+ * UPDATE flow
+ * ========================= */
 export const updateFlowData = async (
   payload: UpdateFlowRequest
 ): Promise<ApiCodeResponse["code"]> => {
@@ -74,23 +74,20 @@ export const updateFlowData = async (
     throw new Error("storedFlowRowKey is required");
   }
 
-  const response = await fetch(`${URL_API_AGENT}/update-flow`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+  const response = await httpClient<ApiCodeResponse>(
+    "/update-flow",
+    {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }
+  );
 
-  if (!response.ok) {
-    throw new Error(`Error ${response.status}: ${response.statusText}`);
-  }
-
-  const data: ApiCodeResponse = await response.json();
-  return data.code;
+  return response.code;
 };
 
-
+/* =========================
+ * PATCH flow
+ * ========================= */
 export const patchFlowData = async (
   payload: PatchFlowRequest
 ): Promise<ApiCodeResponse["code"]> => {
@@ -98,18 +95,13 @@ export const patchFlowData = async (
     throw new Error("storedFlowRowKey is required");
   }
 
-  const response = await fetch(`${URL_API_AGENT}/patch-flow`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+  const response = await httpClient<ApiCodeResponse>(
+    "/patch-flow",
+    {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    }
+  );
 
-  if (!response.ok) {
-    throw new Error(`Error ${response.status}: ${response.statusText}`);
-  }
-
-  const data: ApiCodeResponse = await response.json();
-  return data.code;
+  return response.code;
 };

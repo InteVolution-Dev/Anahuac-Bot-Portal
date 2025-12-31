@@ -6,14 +6,57 @@ import {
   Brain,
   TerminalSquare,
   LogOut,
-  ChevronDown,
-  CircleFadingArrowUp,
   Rocket,
 } from "lucide-react";
+import { deployChangeAgent } from "../../api/deploy";
+import { useSpinnerStore } from "../../store/useSpinner";
+import Swal from "sweetalert2";
 
 export default function SideNav() {
   const navigate = useNavigate();
   const location = useLocation();
+  const openSpinner = useSpinnerStore((s) => s.openSpinner);
+  const closeSpinner = useSpinnerStore((s) => s.closeSpinner);
+
+  const onUploadChangeDeployAgent = async () => {
+    try {
+      openSpinner()
+      const response = await deployChangeAgent();
+      Swal.fire({
+        title: "¡Éxito!",
+        text: "Cambios listos en el Agente de producción",
+        icon: "success",
+      });
+      console.log("Deploy success:", response.code.message);
+
+    } catch (error: any) {
+      console.error("Deploy failed:", error.message);
+      closeSpinner()
+      Swal.fire({
+        title: "¡Error!",
+        text: "Algo salio mal al tratar de subir los cambios",
+        icon: "error",
+      });
+
+    } finally {
+      closeSpinner()
+    }
+  };
+
+  const confirmUpload = async () => {
+  const result = await Swal.fire({
+    title: "¿Estás seguro?",
+    text: "Esta acción subira los cambios al agente de producción",
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonText: "Sí, confirmar",
+    cancelButtonText: "Cancelar",
+    reverseButtons: true,
+  });
+  if (result.isConfirmed) {
+    onUploadChangeDeployAgent();
+  } 
+};
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -101,23 +144,22 @@ export default function SideNav() {
           </button>
         </nav>
       </div>
-
-      {/* 🔸 Botón de desplegar */}
       <div className="px-4">
         <button
-        className="flex items-center gap-2 px-4 py-2 w-full justify-center rounded-xl 
+          className="flex items-center gap-2 px-4 py-2 w-full justify-center rounded-xl 
              border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 
              text-gray-700 dark:text-gray-300 font-medium shadow-sm transition-all 
              hover:bg-gray-50 dark:hover:bg-gray-700/60"
-      >
-        Desplegar
+          onClick={confirmUpload}
+        >
+          Desplegar
 
-        <Rocket
-          className="w-4 h-4 text-orange-500 "
-        />
-      </button>
+          <Rocket
+            className="w-4 h-4 text-orange-500 "
+          />
+        </button>
       </div>
-      
+
 
 
       {/* 🔸 Logout */}
