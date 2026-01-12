@@ -45,7 +45,7 @@ const Login = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-500/10 mb-6">
               <Bot className="w-8 h-8 text-orange-500" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">
               Bienvenido a <span className="text-orange-500">Anahuac IA</span>
             </h1>
             <p className="text-gray-500 dark:text-gray-400">
