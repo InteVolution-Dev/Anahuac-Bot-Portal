@@ -1,5 +1,9 @@
 import { PublicClientApplication } from "@azure/msal-browser";
 
+export const apiScopes = [
+  `api://${import.meta.env.VITE_AZURE_CLIENT_ID}/access_as_user`
+];
+
 export const msalConfig = {
   auth: {
     clientId: import.meta.env.VITE_AZURE_CLIENT_ID,

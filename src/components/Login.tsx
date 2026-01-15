@@ -2,6 +2,9 @@ import { useNavigate } from "react-router-dom";
 import WindowsIcon from "../assets/brand-windows.svg?react";
 import { Bot, Sparkles } from "lucide-react";
 import { useMsal } from "@azure/msal-react";
+// Local imports
+import { apiScopes } from "../utils/authConfig";
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,17 +12,30 @@ const Login = () => {
 
   const handleMicrosoftLogin = async () => {
     try {
-      const response = await instance.loginPopup({
+      await instance.loginPopup({
         scopes: ["openid", "profile", "email"],
       });
 
-      localStorage.setItem("accessToken", response.accessToken);
+      const account = instance.getActiveAccount();
+
+      if (!account) {
+        throw new Error("No active account found");
+      }
+
+      const tokenResponse = await instance.acquireTokenSilent({
+        scopes: apiScopes,
+        account
+      });
+
+      // localStorage.setItem("accessToken", response.accessToken);
+      const apiAccessToken = tokenResponse.accessToken;
+      localStorage.setItem("accessToken", apiAccessToken);
 
       localStorage.setItem(
         "user",
         JSON.stringify({
-          name: response.account?.name,
-          email: response.account?.username,
+          name: tokenResponse.account?.name,
+          email: tokenResponse.account?.username,
         })
       );
 
