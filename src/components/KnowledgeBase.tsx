@@ -12,7 +12,7 @@ import {
 import Button from "./ui/Button";
 import Swal from "sweetalert2";
 import { deleteIndexFile, getIndexFiles, uploadIndexFiles, type StatusType } from "../api/documents";
-import { formatDateTimeFriendly } from "../utils/helpers";
+import { formatDateTimeFriendly, formatFileSize } from "../utils/helpers";
 import { useSpinnerStore } from "../store/useSpinner";
 import { getSystemPrompt, updateSystemPrompt } from "../api/system_promt";
 
@@ -51,6 +51,7 @@ type CurrentDocument = {
   nameDocument: string;
   createdAt: string;
   status: StatusType;
+  size: number
 };
 
 
@@ -324,6 +325,7 @@ export default function KnowledgeBase({
       const mappedDocuments: CurrentDocument[] =
         response.data.files.map((file) => ({
           idDocument: file.id,
+          size: file.size,
           nameDocument: file.originalName,
           createdAt: file.createdAt,
           status: file.status
@@ -503,6 +505,9 @@ export default function KnowledgeBase({
                       </p>
                       <p className="text-xs text-gray-400">
                         {formatDateTimeFriendly(doc.createdAt)}
+                      </p>
+                      <p className="inline-flex items-center rounded-md bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                        {formatFileSize(doc.size)}
                       </p>
                     </div>
                   </div>

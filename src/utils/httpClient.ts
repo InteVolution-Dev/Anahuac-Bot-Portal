@@ -42,7 +42,7 @@ export const httpClient = async <T>(
     try {
       errorBody = await response.json();
     } catch {
-      /* no-op */
+      
     }
 
     console.error("❌ Response error:", errorBody);
@@ -54,8 +54,6 @@ export const httpClient = async <T>(
   }
 
   const data = (await response.json()) as T;
-
-  console.log("✅ Response:", data);
 
   return data;
 };
