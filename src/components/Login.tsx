@@ -12,10 +12,11 @@ const Login = () => {
 
   const handleMicrosoftLogin = async () => {
     try {
-      await instance.loginPopup({
+      const loginResponse = await instance.loginPopup({
         scopes: ["openid", "profile", "email"],
       });
-
+      // 🔑 ESTO ES CLAVE
+      instance.setActiveAccount(loginResponse.account);
       const account = instance.getActiveAccount();
 
       if (!account) {
@@ -26,7 +27,6 @@ const Login = () => {
         scopes: apiScopes,
         account
       });
-
       // localStorage.setItem("accessToken", response.accessToken);
       const apiAccessToken = tokenResponse.accessToken;
       localStorage.setItem("accessToken", apiAccessToken);
