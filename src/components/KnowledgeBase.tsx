@@ -353,7 +353,7 @@ export default function KnowledgeBase({
 
 
   return (
-    <div className="h-full flex flex-col glass dark:glass-dark rounded-3xl p-6 border border-white/50 dark:border-white/10 shadow-xl shadow-orange-500/5">
+    <div className="flex flex-col glass dark:glass-dark rounded-3xl p-6 border border-white/50 dark:border-white/10 shadow-xl shadow-orange-500/5">
       {/* ================= Header ================= */}
       <div className="flex items-center gap-3 mb-6 shrink-0">
         <div className="p-2.5 bg-orange-500/10 rounded-xl">
