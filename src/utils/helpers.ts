@@ -105,7 +105,7 @@ export function transformGetFlowsResponseToFullFlow(
       name: flow.name || "",
       description: flow.description || "",
       active: flow.active,
-      baseUrl: flow.urlBase,
+      baseUrl: flow.baseUrl,
       auth,
       endpoints,
       createdAt: flow.updatedAt,

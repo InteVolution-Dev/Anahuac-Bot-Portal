@@ -98,7 +98,6 @@ export interface Flow {
   active: boolean;
   baseUrl: string;
   auth: FlowAuth;
-  // Mantenemos los campos legacy para compatibilidad, pero usamos endpoints como principal
   method?: HttpMethod;
   path?: string;
   parameters?: FlowParameter[];
